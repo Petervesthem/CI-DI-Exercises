@@ -10,3 +10,24 @@ jobs:
       - run: ci/build-app.sh
       - name: testing
         run: ci/unit-test-app.sh
+      - name: Upload a Build Artifact # Name of the step
+        uses: actions/upload-artifact@v4 # Action to use
+        with: # Parameters for the action
+          name: my-artifact # Name of the artifact to upload. Optional. Default is 'artifact
+          path: path/to/artifact/ # A file, directory or wildcard pattern that describes what to upload. Required.
+      - name: Download a single artifact # Name of the step
+        uses: actions/download-artifact@v4 # Action to use
+        with: # Parameters for the action
+          name: my-artifact # Name of the artifact to download. Optional. If unspecified, all artifacts for the run are downloaded.
+          path: path/to/download/artifact/     # Destination path. Supports basic tilde expansion.  # Optional. Default is $GITHUB_WORKSPACE 
+      - uses: actions/upload-artifact@v4
+        with: 
+          name: code
+          path: .
+      - name: run linting
+        uses: super-linter/super-linter/slim@v5 
+        env:
+          DEFAULT_BRANCH: main
+          # To report GitHub Actions status checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISABLE_ERRORS: true        
