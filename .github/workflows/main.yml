@@ -1,5 +1,8 @@
 name: Main workflow
-on: push
+on:
+  push:
+    branches:
+      - "main"
 env:
   docker_username: petervesthem
   docker_password: ${{ secrets.GITHUB_TOKEN }} #Nees to be set to be made available to the workflow
